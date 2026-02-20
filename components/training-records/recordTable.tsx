@@ -58,7 +58,13 @@ function TrainingRecordTable() {
                 <TableCell className="">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() =>
+                          router.push(`/my-training-records/${record.id}`)
+                        }
+                      >
                         <UploadIcon className="w-4 h-4" />
                       </Button>
                     </DropdownMenuTrigger>
