@@ -5,7 +5,7 @@ import React from "react";
 
 function Dashboard() {
   return (
-    <div className="h-screen overflow-y-auto p-4">
+    <div className="min-h-screen overflow-y-auto p-4">
       <PageHeader
         title="My Dashboard"
         subtitle="Your training overview and progress"
@@ -24,6 +24,22 @@ function Dashboard() {
           count={120}
           description="Topic Completed"
         />
+      </div>
+
+      {/* Training Calendar */}
+      <div className="mt-10">
+        <h2 className="text-2xl font-bold tracking-tight">Training Calendar</h2>
+        <p className="text-muted-foreground text-sm mt-1">
+          Upcoming training sessions and events
+        </p>
+        <div className="mt-4 w-full rounded-2xl shadow-md border overflow-hidden">
+          <iframe
+            src="https://calendar.google.com/calendar/embed?showTitle=0&showNav=1&showPrint=0&showTabs=1&showCalendars=0"
+            className="w-full h-[500px] md:h-[600px]"
+            frameBorder="0"
+            scrolling="no"
+          />
+        </div>
       </div>
     </div>
   );
