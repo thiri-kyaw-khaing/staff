@@ -12,7 +12,7 @@ import {
 import TrainingRecordTable from "@/components/training-records/recordTable";
 function MyTrainingRecords() {
   return (
-    <div className="h-screen overflow-y-auto p-4 m-2 space-y-4">
+    <div className="min-h-screen space-y-4 m-2">
       <PageHeader
         title="My Training Records"
         subtitle="View your training history and progress"

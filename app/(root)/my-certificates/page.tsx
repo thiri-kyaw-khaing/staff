@@ -4,7 +4,7 @@ import { certificates } from "@/data/certificates";
 
 function MyCertificates() {
   return (
-    <div className="h-screen overflow-y-auto p-4 m-2 space-y-4">
+    <div className="min-h-screen space-y-4 m-2">
       <PageHeader
         title="My Certificates"
         subtitle="View your earned certificates"

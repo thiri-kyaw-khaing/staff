@@ -5,7 +5,7 @@ import React from "react";
 
 function Dashboard() {
   return (
-    <div className="min-h-screen overflow-y-auto p-4">
+    <div className="min-h-screen space-y-4 m-2">
       <PageHeader
         title="My Dashboard"
         subtitle="Your training overview and progress"

@@ -38,7 +38,7 @@ async function UploadCertificate({ params }: RecordDetailProps) {
     return <div>Record not found</div>;
   }
   return (
-    <div className="h-screen overflow-y-auto p-4 m-2 space-y-4">
+    <div className="min-h-screen space-y-4 m-2">
       {/* Back Button */}
       <Button
         asChild
@@ -58,7 +58,7 @@ async function UploadCertificate({ params }: RecordDetailProps) {
       <div className="border rounded-md m-2  p-4 space-y-4">
         <p className="font-medium mb-2">Certificate Information</p>
         <div className="grid grid-cols-2 p-2 justify-between gap-4">
-          <PlanDetails title="Employee" subtitle={record.staff.fullName} />
+          <PlanDetails title="Employee" subtitle={record.staff.name} />
 
           <PlanDetails title="Training Name" subtitle={record.course.name} />
           <PlanDetails title="Category" subtitle={record.course.category} />
