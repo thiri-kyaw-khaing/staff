@@ -10,7 +10,7 @@ function Dashboard() {
         title="My Dashboard"
         subtitle="Your training overview and progress"
       />
-      <div className="flex flex-wrap gap-10 mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-6">
         <DashboardCard
           icon={<CheckCheckIcon className="w-6 h-6" />}
           percentChange="+12%"
