@@ -1,12 +1,20 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/appSideBar";
+import { getMe } from "@/lib/api/getMe";
 import { MenuIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const me = await getMe();
+
+  if (!me) {
+    redirect("/login");
+  }
+
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full overflow-hidden">

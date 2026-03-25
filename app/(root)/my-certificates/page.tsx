@@ -1,8 +1,9 @@
 import PageHeader from "@/components/dashboard/pageHeadert";
 import CertificateCard from "@/components/my-certificates/certificateCard";
-import { certificates } from "@/data/certificates";
+import { getCertificates } from "@/lib/api/getCertificates";
 
-function MyCertificates() {
+export async function MyCertificates() {
+  const certificates = await getCertificates();
   return (
     <div className="min-h-screen space-y-4 m-2">
       <PageHeader

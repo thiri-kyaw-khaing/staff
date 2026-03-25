@@ -10,7 +10,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import TrainingRecordTable from "@/components/training-records/recordTable";
-function MyTrainingRecords() {
+import { getRecords } from "@/lib/api/getRecords";
+export async function MyTrainingRecords() {
+  const records = await getRecords();
   return (
     <div className="min-h-screen space-y-4 m-2">
       <PageHeader
@@ -44,7 +46,7 @@ function MyTrainingRecords() {
         {/* Button */}
         {/* <Button className="bg-[#006022] hover:bg-[#005018] px-8">Search</Button> */}
       </div>
-      <TrainingRecordTable />
+      <TrainingRecordTable records={records.data.items} />
     </div>
   );
 }

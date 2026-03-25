@@ -1,27 +1,9 @@
-import PageHeader from "@/components/dashboard/pageHeadert";
-import { Card, CardContent } from "@/components/ui/card";
-import { ojtRecords } from "@/data/records";
-import { ArrowLeftIcon, Users } from "lucide-react";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-  FieldLegend,
-  FieldDescription,
-  FieldSeparator,
-} from "@/components/ui/field";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import UploadCertificateForm from "@/components/training-records/uploadCertificateForm";
+import { getRecordById } from "@/lib/api/getRecordById";
+import { notFound } from "next/navigation";
 type RecordDetailProps = {
   params: {
     recordId: string;
@@ -29,13 +11,11 @@ type RecordDetailProps = {
 };
 async function UploadCertificate({ params }: RecordDetailProps) {
   const { recordId } = await params;
-  const id = parseInt(recordId);
-  console.log("recordId", recordId);
-  console.log("id", id);
-  const record = ojtRecords.find((p) => p.id === id);
+  const response = await getRecordById(recordId);
+  const record = response?.data ?? response;
 
   if (!record) {
-    return <div>Record not found</div>;
+    notFound();
   }
   return (
     <div className="min-h-screen space-y-4 m-2">
@@ -58,26 +38,38 @@ async function UploadCertificate({ params }: RecordDetailProps) {
       <div className="border rounded-md m-2  p-4 space-y-4">
         <p className="font-medium mb-2">Certificate Information</p>
         <div className="grid grid-cols-2 p-2 justify-between gap-4">
-          <PlanDetails title="Employee" subtitle={record.staff.name} />
+          <PlanDetails title="Employee" subtitle={record.staffName} />
+          <PlanDetails title="Employee ID" subtitle={record.employeeID} />
+          <PlanDetails title="Department" subtitle={record.departmentName} />
+          <PlanDetails title="Division" subtitle={record.division} />
+          <PlanDetails title="Position" subtitle={record.position} />
 
-          <PlanDetails title="Training Name" subtitle={record.course.name} />
-          <PlanDetails title="Category" subtitle={record.course.category} />
-          <PlanDetails title="Date Attended" subtitle={record.course.date} />
+          <PlanDetails
+            title="Training Name"
+            subtitle={record.trainingPlanName}
+          />
+          <PlanDetails title="Category" subtitle={record.category} />
+          <PlanDetails title="Type" subtitle={record.type} />
+          <PlanDetails
+            title="Speaker Institute"
+            subtitle={record.speakerInstitute}
+          />
+          <PlanDetails title="Date Attended" subtitle={record.date} />
           <PlanDetails
             title="Duration"
-            subtitle={record.course.numberOfDays.toString() + "day"}
+            subtitle={`${record.numberOfDays} day(s)`}
           />
-
-          <PlanDetails title="Date" subtitle={record.course.date} />
           <PlanDetails
             title="Number Of Hours"
-            subtitle={record.course.numberOfHours.toString()}
+            subtitle={String(record.numberOfHours)}
           />
-          <PlanDetails title="Location" subtitle={record.course.location} />
+          <PlanDetails title="Location" subtitle={record.location} />
         </div>
       </div>
 
-      <UploadCertificateForm />
+      <UploadCertificateForm
+        trainingId={record.trainingPlanId ?? record.trainingId ?? record.id}
+      />
     </div>
   );
 }
