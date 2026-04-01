@@ -25,16 +25,12 @@ function Dashboard() {
           description="Topic Completed"
         />
       </div>
-
       {/* Training Calendar */}
-      <div className="mt-10">
+      <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight">Training Calendar</h2>
-        <p className="text-muted-foreground text-sm mt-1">
-          Upcoming training sessions and events
-        </p>
-        <div className="mt-4 w-full rounded-2xl shadow-md border overflow-hidden">
+        <div className="w-full rounded-2xl shadow-md border overflow-hidden">
           <iframe
-            src="https://calendar.google.com/calendar/embed?showTitle=0&showNav=1&showPrint=0&showTabs=1&showCalendars=0"
+            src="https://calendar.google.com/calendar/embed?src=145e678c35bb5fb0c74ca3359c85f0ab6e565f23297871e901550d2297b1f3cc%40group.calendar.google.com&ctz=Asia%2FBangkok"
             className="w-full h-[500px] md:h-[600px]"
             frameBorder="0"
             scrolling="no"

@@ -38,37 +38,41 @@ async function UploadCertificate({ params }: RecordDetailProps) {
       <div className="border rounded-md m-2  p-4 space-y-4">
         <p className="font-medium mb-2">Certificate Information</p>
         <div className="grid grid-cols-2 p-2 justify-between gap-4">
-          <PlanDetails title="Employee" subtitle={record.staffName} />
-          <PlanDetails title="Employee ID" subtitle={record.employeeID} />
-          <PlanDetails title="Department" subtitle={record.departmentName} />
-          <PlanDetails title="Division" subtitle={record.division} />
-          <PlanDetails title="Position" subtitle={record.position} />
+          <PlanDetails title="Employee" subtitle={record.user.name} />
+          <PlanDetails title="Employee ID" subtitle={record.user.employeeID} />
+          <PlanDetails title="Department" subtitle={record.user.department.name} />
+          <PlanDetails
+            title="Division"
+            subtitle={record.user.department.division}
+          />
+          <PlanDetails title="Position" subtitle={record.user.position} />
 
           <PlanDetails
             title="Training Name"
-            subtitle={record.trainingPlanName}
+            subtitle={record.trainingPlan.name}
           />
-          <PlanDetails title="Category" subtitle={record.category} />
-          <PlanDetails title="Type" subtitle={record.type} />
+          <PlanDetails title="Category" subtitle={record.trainingPlan.category} />
+          <PlanDetails title="Type" subtitle={record.trainingPlan.type} />
           <PlanDetails
             title="Speaker Institute"
-            subtitle={record.speakerInstitute}
+            subtitle={record.trainingPlan.speakerInstitute}
           />
-          <PlanDetails title="Date Attended" subtitle={record.date} />
+          <PlanDetails title="Date Attended" subtitle={record.trainingPlan.date} />
           <PlanDetails
             title="Duration"
-            subtitle={`${record.numberOfDays} day(s)`}
+            subtitle={`${record.trainingPlan.numberOfDays} day(s)`}
           />
           <PlanDetails
             title="Number Of Hours"
-            subtitle={String(record.numberOfHours)}
+            subtitle={String(record.trainingPlan.numberOfHours)}
           />
-          <PlanDetails title="Location" subtitle={record.location} />
+          <PlanDetails title="Location" subtitle={record.trainingPlan.location} />
+          <PlanDetails title="Status" subtitle={record.status} />
         </div>
       </div>
 
       <UploadCertificateForm
-        trainingId={record.trainingPlanId ?? record.trainingId ?? record.id}
+        trainingId={record.trainingPlanId}
       />
     </div>
   );

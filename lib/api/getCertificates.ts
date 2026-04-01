@@ -3,25 +3,15 @@
 import { API_BASE_URL } from "@/app/api/api";
 import type { Certificate } from "@/types/data";
 import { cookies } from "next/headers";
+import { authFetch } from "./authFetch";
 
 export async function getCertificates(): Promise<Certificate[]> {
-  const cookieStore = await cookies();
-  // build cookie string manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
-  const response = await fetch(`${API_BASE_URL}/staff/certificates`, {
+  const { response, unauthorized } = await authFetch("/staff/certificates", {
     method: "GET",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", Cookie: cookieHeader },
     next: { tags: ["certificates"] },
   });
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch certificates");
-  }
+  if (unauthorized) return [];
 
   const payload = await response.json();
   return (payload.data ?? []) as Certificate[];

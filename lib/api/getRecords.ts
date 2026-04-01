@@ -1,26 +1,20 @@
 "use server";
 
-import { API_BASE_URL } from "@/app/api/api";
-import { cookies } from "next/headers";
+import { authFetch } from "@/lib/api/authFetch";
 
 export async function getRecords() {
-  const cookieStore = await cookies();
-  // build cookie string manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
-  const response = await fetch(`${API_BASE_URL}/staff/records`, {
+  const { response, unauthorized } = await authFetch("/staff/records", {
     method: "GET",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", Cookie: cookieHeader },
-    next: { tags: ["records"] },
+    cache: "no-store",
   });
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch records");
+  if (unauthorized) {
+    return null;
   }
+
+  //   if (!response.ok) {
+  //     throw new Error("Failed to fetch records");
+  //   }
 
   return response.json();
 }

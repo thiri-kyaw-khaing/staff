@@ -2,6 +2,7 @@
 
 import { API_BASE_URL } from "@/app/api/api";
 import { cookies } from "next/headers";
+import { authFetch } from "../api/authFetch";
 
 export type UploadCertificateState = {
   message?: string;
@@ -24,23 +25,13 @@ export async function uploadCertificate(
     return { message: "Certificate file is required.", ok: false };
   }
 
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
   const body = new FormData();
   body.append("trainingId", String(trainingId));
-  if (description) {
-    body.append("description", String(description));
-  }
+  if (description) body.append("description", String(description));
   body.append("image", image);
 
-  const response = await fetch(`${API_BASE_URL}/staff/certificates`, {
+  const { response } = await authFetch("/staff/certificates", {
     method: "POST",
-    credentials: "include",
-    headers: { Cookie: cookieHeader },
     body,
     cache: "no-store",
   });

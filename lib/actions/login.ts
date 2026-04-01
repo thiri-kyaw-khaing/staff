@@ -1,9 +1,9 @@
 "use server";
 
-import { API_BASE_URL } from "@/app/api/api";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { z } from "zod";
+import { API_BASE_URL } from "@/app/api/api";
 
 export type State = {
   errors?: {
@@ -44,37 +44,53 @@ export async function LoginAction(
     cache: "no-store",
   });
 
-  // ❌ API error
   if (!response.ok) {
     const errorData = await response.json();
     return {
       message: errorData.message || "Login failed",
     };
   }
+  const data = await response.json();
+  const accessToken = data?.accessToken;
 
-  // ✅ Handle cookies
-  const setCookie = response.headers.get("set-cookie");
-
-  if (setCookie) {
-    const accessMatch = setCookie.match(/access_token=([^;]+)/);
-    const refreshMatch = setCookie.match(/refresh_token=([^;]+)/);
-
-    const cookieStore = await cookies();
-
-    if (accessMatch) {
-      cookieStore.set("access_token", accessMatch[1], {
-        httpOnly: true,
-        path: "/",
-      });
-    }
-
-    if (refreshMatch) {
-      cookieStore.set("refresh_token", refreshMatch[1], {
-        httpOnly: true,
-        path: "/",
-      });
-    }
+  if (!accessToken) {
+    return {
+      message: "Login failed",
+    };
   }
+
+  const cookieStore = await cookies();
+  console.log("TOKEN AFTER LOGIN:", cookieStore.get("token"));
+
+  cookieStore.set("token", accessToken, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+  });
+
+  // const setCookie = response.headers.get("set-cookie");
+
+  // if (setCookie) {
+  //   const accessMatch = setCookie.match(/access_token=([^;]+)/);
+  //   const refreshMatch = setCookie.match(/refresh_token=([^;]+)/);
+
+  //   const cookieStore = await cookies();
+
+  //   if (accessMatch) {
+  //     cookieStore.set("access_token", accessMatch[1], {
+  //       httpOnly: true,
+  //       path: "/",
+  //     });
+  //   }
+
+  //   if (refreshMatch) {
+  //     cookieStore.set("refresh_token", refreshMatch[1], {
+  //       httpOnly: true,
+  //       path: "/",
+  //     });
+  //   }
+  // }
 
   // ✅ Redirect (no return needed)
   redirect("/dashboard");

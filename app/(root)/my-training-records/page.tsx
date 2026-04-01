@@ -11,15 +11,16 @@ import {
 } from "@/components/ui/select";
 import TrainingRecordTable from "@/components/training-records/recordTable";
 import { getRecords } from "@/lib/api/getRecords";
+import { redirect } from "next/navigation";
 export async function MyTrainingRecords() {
   const records = await getRecords();
+  const items = records?.data?.items ?? [];
   return (
     <div className="min-h-screen space-y-4 m-2">
       <PageHeader
         title="My Training Records"
         subtitle="View your training history and progress"
       />
-
       <div className="flex items-center gap-4 my-6 justify-between">
         {/* Search */}
         {/* <div className="relative w-[70%]"> */}
@@ -46,7 +47,11 @@ export async function MyTrainingRecords() {
         {/* Button */}
         {/* <Button className="bg-[#006022] hover:bg-[#005018] px-8">Search</Button> */}
       </div>
-      <TrainingRecordTable records={records.data.items} />
+      {items.length === 0 ? (
+        <p className="text-center text-gray-500">No training records found.</p>
+      ) : (
+        <TrainingRecordTable records={items} />
+      )}
     </div>
   );
 }
