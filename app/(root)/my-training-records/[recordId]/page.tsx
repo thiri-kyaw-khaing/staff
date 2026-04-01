@@ -40,7 +40,10 @@ async function UploadCertificate({ params }: RecordDetailProps) {
         <div className="grid grid-cols-2 p-2 justify-between gap-4">
           <PlanDetails title="Employee" subtitle={record.user.name} />
           <PlanDetails title="Employee ID" subtitle={record.user.employeeID} />
-          <PlanDetails title="Department" subtitle={record.user.department.name} />
+          <PlanDetails
+            title="Department"
+            subtitle={record.user.department.name}
+          />
           <PlanDetails
             title="Division"
             subtitle={record.user.department.division}
@@ -51,13 +54,19 @@ async function UploadCertificate({ params }: RecordDetailProps) {
             title="Training Name"
             subtitle={record.trainingPlan.name}
           />
-          <PlanDetails title="Category" subtitle={record.trainingPlan.category} />
+          <PlanDetails
+            title="Category"
+            subtitle={record.trainingPlan.category}
+          />
           <PlanDetails title="Type" subtitle={record.trainingPlan.type} />
           <PlanDetails
             title="Speaker Institute"
             subtitle={record.trainingPlan.speakerInstitute}
           />
-          <PlanDetails title="Date Attended" subtitle={record.trainingPlan.date} />
+          <PlanDetails
+            title="Date Attended"
+            subtitle={record.trainingPlan.date}
+          />
           <PlanDetails
             title="Duration"
             subtitle={`${record.trainingPlan.numberOfDays} day(s)`}
@@ -66,14 +75,15 @@ async function UploadCertificate({ params }: RecordDetailProps) {
             title="Number Of Hours"
             subtitle={String(record.trainingPlan.numberOfHours)}
           />
-          <PlanDetails title="Location" subtitle={record.trainingPlan.location} />
+          <PlanDetails
+            title="Location"
+            subtitle={record.trainingPlan.location}
+          />
           <PlanDetails title="Status" subtitle={record.status} />
         </div>
       </div>
 
-      <UploadCertificateForm
-        trainingId={record.trainingPlanId}
-      />
+      <UploadCertificateForm trainingId={record.trainingPlanId} />
     </div>
   );
 }
