@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DownloadIcon, UploadIcon } from "lucide-react";
+import { UploadIcon } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuTrigger } from "../ui/dropdown-menu";
@@ -17,10 +17,9 @@ import { useRouter } from "next/navigation";
 import { ojtRecords } from "@/data/records";
 import { MyRecords } from "@/types/data";
 
-// import { DeleteOjtDialog } from "./deleteOJTdialog";
-
 function TrainingRecordTable({ records }: { records: MyRecords[] }) {
   const router = useRouter();
+  console.log("TrainingRecordTable records:", records);
 
   return (
     <>
@@ -117,7 +116,7 @@ function TrainingRecordTable({ records }: { records: MyRecords[] }) {
                   {record.postTestScore ?? "-"}
                 </TableCell>
 
-                <TableCell>Excellent</TableCell>
+                <TableCell>{record.evaluation ?? "-"}</TableCell>
 
                 <TableCell className="">
                   <DropdownMenu>

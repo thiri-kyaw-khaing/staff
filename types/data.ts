@@ -96,6 +96,7 @@ export type MyRecords = {
   speakerInstitute: string;
   preTestScore?: number;
   postTestScore?: number;
+  evaluation?: string;
   trainingType:
     | "In-house"
     | "Public"
