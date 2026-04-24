@@ -10,8 +10,9 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }>) {
   const me = await getMe();
+  const user = me?.user;
 
-  if (!me) {
+  if (!user) {
     redirect("/login");
   }
 
@@ -19,7 +20,13 @@ export default async function DashboardLayout({
     <SidebarProvider>
       <div className="flex h-screen w-full overflow-hidden">
         {/* Sidebar: fixed on lg+, drawer on mobile */}
-        <AppSidebar />
+        <AppSidebar
+          user={{
+            name: user.name,
+            position: user.position,
+            employeeID: user.employeeID,
+          }}
+        />
 
         {/* Main content area */}
         <div className="flex flex-1 flex-col min-w-0">
